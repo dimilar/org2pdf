@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \RequirePackage{ifxetex,ifpdf}
+\ifx\pdfoutput\undefined
+\usepackage[SlantFont,BoldFont,fallback,CJKnumber,CJKchecksingle,CJKmath=true,AutoFakeBold,AutoFakeSlant]{xeCJK}
+\defaultfontfeatures{Mapping=tex-text}
+\def\Status{1}
+\parindent=20pt
+% fiexed the conflict between fourier and xunicode
+\let\hbar\relax
+\usepackage{fontspec}
+
+%%%%%%%%%%%%%%%%%%%% Global font setup %%%%%%%%%%%%%%%%%%%%
+%% Numbers={OldStyle,Proportional},SmallCapsFeatures={LetterSpace=6},%
+\setmainfont[BoldFont={Myriad Pro Bold},BoldFeatures={LetterSpace=3}]{Minion Pro}
+\setsansfont[LetterSpace=3]{Myriad Pro}% Numbers={OldStyle,Proportional},
+\setmonofont{Courier Std}
+
+% \usepackage{fourier}
+% \usepackage[T1]{fontenc}
+% \setsansfont{Nimbus Sans L}
+% \usepackage{times}
+% %\setmainfont{TeX Gyre Termes}
+
+\let\oldttfamily\ttfamily
+\def\ttfamily{\oldttfamily\fontencoding{EU1}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%% Chinese font setup %%%%%%%%%%%%%%%%%%%%
+\setCJKmainfont[BoldFont={Adobe Heiti Std},ItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setCJKsansfont{Adobe Heiti Std}
+\setCJKmonofont{Adobe Kaiti Std}
+
+\setCJKfamilyfont{song}{Adobe Song Std}
+\newcommand*{\songti}{\CJKfamily{song}}
+\setCJKfamilyfont{hei}{Adobe Heiti Std}
+\newcommand*{\heiti}{\CJKfamily{hei}}
+\setCJKfamilyfont{fs}{Adobe Fangsong Std}
+\newcommand*{\fangsong}{\CJKfamily{fs}}
+\setCJKfamilyfont{kai}{Adobe Kaiti Std}
+\newcommand*{\kaishu}{\CJKfamily{kai}}
+\DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
+
+%%%%%%%%%%%%%%%%%%%% Math font setup %%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage[math-style=ISO]{unicode-math} % try sans-style=upright
+\setmathfont{xits-math.otf}
+% \setmathfont{Neo Euler}
+% \let\mathbf\mathbfsf
+% \let\mathbfit\mathbfsfit
+%%%%%%%%%%%%%%%%%%%% Fntef setup %%%%%%%%%%%%%%%%%%%%
+\usepackage{xeCJKfntef}
+\else
+\usepackage[UTF8]{ctex}
+\fi
