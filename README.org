@@ -1,0 +1,15 @@
+A python tool to convert an org-mode file to a specified type of one,
+such as latex, pdf, html
+
+* Prerequirements
++ Emacs (>23.1)
++ TeX System
+* Usage
+python org2pdf -c emax_org.el -f export-fun in.org
+where export-fun could be:
++ org-latex-export-to-latex
++ org-latex-export-to-pdf
++ org-beamer-export-to-latex
++ org-beamer-export-to-pdf
++ org-html-export-to-html
+...

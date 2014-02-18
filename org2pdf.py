@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# copyright @ 2014 Stift
+#
 import subprocess, sys, getopt
 from sys import stdout
 class OrgExport(object):
@@ -9,7 +17,6 @@ class OrgExport(object):
 
     def __init__(self, conf, func, org_file):
         """
-        conf_dir: the location of org-mode's configuration file
         conf: org-mode's configuration file
         func: specify the function to export the given file, e.g. org-latex-export-as-latex
         org_file: input org-mode file
@@ -33,7 +40,7 @@ class OrgExport(object):
 
 def usage():
     print '''
-Usage:org2pdf [ options ] org_file
+    Usage:org2pdf [ options ] org_file
     Options:
     -l init_file  [--conf=init_file]  emacs init file
     -f org_function [--funcall=org_function ] the org function called
