@@ -1,28 +1,3 @@
-;;; emax_export.el --- 
-
-;; Copyright (C) 2014 Zhu Shulei
-
-;; Author: Zhu Shulei
-;; Modified by: Zhu Shulei <schuleichu@gmail.com>
-;; Created: 2014-07-10 12:48
-
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License
-;; as published by the Free Software Foundation; either version 3
-;; of the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-;; Boston, MA 02110-1301, USA.
-
-;;; Commentary:
-
 ;;;;;;;;;;;;;;;;;;;;  org export setting  ;;;;;;;;;;;;;;;;;;;;
 ;; (setq org-odt-data-dir  (concat emax-maindir "/org/odt/"))
 ;; (setq org-export-odt-schema-dir (concat emax-maindir "/org/odt/schema"))
@@ -34,22 +9,22 @@
 (setq org-export-with-LaTeX-fragments t)
 (setq org-latex-remove-logfiles nil)
 (setq org-export-latex-tables-column-borders t)
-(setq org-export-latex-default-packages-alist '(("" "fixltx2e" t) ("" "graphicx" t) ("" "longtable" t) ("" "float" t) ("" "wrapfig" t) ("" "soul" t) ("" "textcomp" t) ("" "amsmath" t)("" "amsfonts" t)("" "latexsym" t)("" "ifthen" t)))
+(setq org-export-latex-default-packages-alist '(("" "graphicx" t) ("" "longtable" t) ("" "float" t) ("" "wrapfig" t) ("" "soul" t) ("" "textcomp" t) ("" "amsmath" t)("" "amsfonts" t)("" "latexsym" t)("" "ifthen" t) ("" "ezfontcfg" t) ("" "mypgf" t) ("" "marvosym" t)))
 (setq org-latex-default-packages-alist org-export-latex-default-packages-alist)
 (cond ((equal system-configuration "arm-androideabi-linux-gnu")
        (setq org-latex-to-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f"))))
       ((eq system-type 'windows-nt)
        (setq org-latex-to-pdf-process (quote ("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))))
-      (t (setq org-latex-to-pdf-process (quote ("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))))
+      ;; (t (setq org-latex-to-pdf-process (quote ("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))))
+      (t (setq org-latex-to-pdf-process (quote ("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")))))
+      
 (setq org-latex-pdf-process org-latex-to-pdf-process)
 
-(setq org-format-latex-options (quote (:foreground "black" :background "white" :scale 1.0 :html-foreground "black" :html-background "white" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
 
-(setq org-latex-title-command "\\dimilarmaketitle")
-(setq org-latex-toc-command "\\dimilartoc")
+(setq org-latex-title-command "\\dimilarmaketitle{\\withoutlegal}")
+(setq org-latex-toc-command "\\dimilartoc\n")
 (setq org-latex-classes '(("article" "\\documentclass[11pt,a4paper]{article}
 \\usepackage[T1]{fontenc}
-\\def\\lang{en}
 \\usepackage{indentfirst}
 \\usepackage{lmodern}
 \\usepackage{times}
@@ -65,7 +40,7 @@
 \\usepackage{graphicx}
 \\usepackage{colortbl}
 \\usepackage{minted}
-\\usepackage{orgpreamble}
+\\renewcommand{\\theFancyVerbLine}{\\sffamily \\textcolor{red}{\\scriptsize \\oldstylenums{\\arabic{FancyVerbLine}}}}
 \\newcounter{note}
 \\newcommand\\dimilartoc{
 \\tableofcontents
@@ -87,18 +62,17 @@ pdfstartview=FitH}
 \\newenvironment{mybox}[2]
   {\\begin{lrbox}{\\whitebgbox}\\begin{minipage}[t]{\\textwidth}\\begin{minipage}{0.25\\textwidth}\\raggedright\\includegraphics[angle=0,height=1.2cm,width=1.2cm]{#1}\\raisebox{10pt}{\\parbox{2.8cm}{\\textcolor{\\mycolor}{\\Large \\bfseries #2}}}\\end{minipage}\\begin{minipage}{0.7\\textwidth}\\ttfamily  }
   {\\end{minipage}\\end{minipage}\\end{lrbox}\\begin{center}\\usebox{\\whitebgbox}\\end{center}}
-\\newcommand\\dimilarmaketitle{\\maketitle}
+\\newcommand\\dimilarmaketitle[1]{\\maketitle}
 " ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}") ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
                           ("book" "\\documentclass[11pt]{book}
 %\\usepackage[utf8]{inputenc}
-\\def\\lang{en}
 \\usepackage[T1]{fontenc}
 \\usepackage{ezfontcfg}
 \\usepackage{hyperref}
 \\usepackage[version=3]{mhchem}
 \\usepackage[x11names]{xcolor}
-\\usepackage{orgpreamble}
 \\usepackage{minted}
+\\renewcommand{\\theFancyVerbLine}{\\sffamily \\textcolor{red}{\\scriptsize \\oldstylenums{\\arabic{FancyVerbLine}}}}
 \\hypersetup{colorlinks=true,
 bookmarksnumbered=true,
 linkcolor=blue,
@@ -115,11 +89,10 @@ pdfstartview=FitH}
 \\newenvironment{mybox}[2]
   {\\begin{lrbox}{\\whitebgbox}\\begin{minipage}[t]{\\textwidth}\\begin{minipage}{0.25\\textwidth}\\raggedright\\includegraphics[angle=0,height=1.2cm,width=1.2cm]{#1}\\raisebox{10pt}{\\parbox{2.8cm}{\\textcolor{\\mycolor}{\\Large \\bfseries #2}}}\\end{minipage}\\begin{minipage}{0.7\\textwidth}\\ttfamily  }
   {\\end{minipage}\\end{minipage}\\end{lrbox}\\begin{center}\\usebox{\\whitebgbox}\\end{center}}
-\\newcommand\\dimilarmaketitle{\\maketitle}"
+\\newcommand\\dimilarmaketitle[1]{\\maketitle}"
                            ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
                           ("manual" "\\documentclass[11pt,a4paper]{report}
-\\def\\lang{en}
 \\usepackage[T1]{fontenc}
 \\usepackage{indentfirst}
 \\usepackage{lmodern}
@@ -136,7 +109,7 @@ pdfstartview=FitH}
 \\usepackage{graphicx}
 \\usepackage{colortbl}
 \\usepackage{minted}
-\\usepackage{orgpreamble}
+\\renewcommand{\\theFancyVerbLine}{\\sffamily \\textcolor{red}{\\scriptsize \\oldstylenums{\\arabic{FancyVerbLine}}}}
 \\renewcommand{\\raggedright}{\\leftskip=0pt \\rightskip=0pt plus 0cm}
 \\usepackage[scale=0.775]{geometry}
 \\setlength{\\parindent}{2em}
@@ -183,7 +156,7 @@ pdfstartview=FitH}
 
 \\pagenumbering{Roman}
 
-\\newcommand\\dimilarmaketitle{
+\\newcommand\\dimilarmaketitle[1]{
 \\thispagestyle{empty}
 \\newlength{\\ttwidth}
 \\newlength{\\sttskip}
@@ -192,7 +165,7 @@ pdfstartview=FitH}
 \\savebox{\\ttsavebox}{\\Huge \\textcolor{\\mycolor}{\\bfseries \\FileTitle}}
 \\settowidth{\\ttwidth}{\\usebox{\\ttsavebox}}
 \\settowidth{\\sttskip}{0.5*(\\textwidth-\\ttwidth)}
-\\vspace*{15pt}
+\\vspace*{10em}
 \\begin{center}
 \\begin{flushright}
 \\mylogo
@@ -202,21 +175,23 @@ pdfstartview=FitH}
 \\hspace{\\sttskip} \\large \\textcolor{\\mycolor}{\\textit{\\FileSubTitle}}\\\\
 % \\hspace{\\sttskip} \\textcolor{\\mycolor}{\\rule{\\ttwidth}{1pt}}
 \\end{minipage}
-\\vskip 0.5em
-\\textcolor{\\mycolor}{\\rule{\\textwidth}{2pt}}
-\\vskip 2em
-\\begin{minipage}[t]{0.6\\textwidth}
-\\vskip 5em
+%\\textcolor{\\mycolor}{\\rule{\\textwidth}{2pt}}
+\\vskip 30em
+\\begin{flushright}
+\\begin{minipage}[t]{0.3\\textwidth}
 \\raggedright%
 {\\docidtext：\\textit{\\FileNo}}\\\\[.35ex]
-{\\doctypetext：\\textit{\\FileType}}\\\\[.35ex]
-{\\docsectext：\\textit{\\FileSecLevel}}
+{\\docdate：\\textit{\\FileDate}}\\\\[.35ex]
+{\\docauthor：\\textit{\\FileAuthor}}
 \\end{minipage}
+\\end{flushright}
 \\end{center}
 \\newpage
+\\ifx#1\\undefined
 \\section*{\\legaltitle}
 \\LegalType
 \\newpage
+\\fi
 }
 \\newcounter{note}
 \\newcommand{\\note}[1]{
@@ -226,17 +201,6 @@ pdfstartview=FitH}
 \\newcommand{\\nnote}[1]{
 \\marginpar[\\raggedleft\\parbox{\\marginparwidth}{\\rmfamily\\scriptsize\\color{red}#1}]
 {\\raggedright\\parbox{\\marginparwidth}{\\rmfamily\\scriptsize\\color{red}#1}}}
-\\usepackage{fixltx2e}
-\\usepackage{graphicx}
-\\usepackage{longtable}
-\\usepackage{float}
-\\usepackage{wrapfig}
-\\usepackage{soul}
-\\usepackage{textcomp}
-\\usepackage{marvosym}
-\\usepackage{wasysym}
-\\usepackage{latexsym}
-\\usepackage{ifthen}
 \\providecommand{\\alert}[1]{\\textbf{#1}}
 \\newcommand\\dimilartoc{
 \\tableofcontents
@@ -251,7 +215,6 @@ pdfstartview=FitH}
 ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
 ("dhdoc" "\\documentclass[11pt,a4paper]{report}
-\\def\\lang{en}
 \\usepackage[T1]{fontenc}
 \\usepackage{indentfirst}
 \\usepackage{lmodern}
@@ -268,7 +231,7 @@ pdfstartview=FitH}
 \\usepackage{graphicx}
 \\usepackage{colortbl}
 \\usepackage{minted}
-\\usepackage{orgpreamble}
+\\renewcommand{\\theFancyVerbLine}{\\sffamily \\textcolor{red}{\\scriptsize \\oldstylenums{\\arabic{FancyVerbLine}}}}
 \\usepackage{titletoc}
 \\usepackage{pifont}
 \\renewcommand\\chaptername{\\ding{110}}
@@ -316,7 +279,7 @@ pdfstartview=FitH}
 
 \\pagenumbering{Roman}
 \\def\\numberline#1{}
-\\newcommand\\dimilarmaketitle{
+\\newcommand\\dimilarmaketitle[1]{
 \\thispagestyle{empty}
 \\newlength{\\ttwidth}
 \\newlength{\\sttskip}
@@ -361,7 +324,6 @@ pdfstartview=FitH}
  ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
 
 ("letterzh" "\\documentclass[11pt]{letter}
-\\def\\lang{en}
 \\usepackage[T1]{fontenc}
 \\usepackage{lmodern}
 \\usepackage{ezfontcfg}
@@ -406,7 +368,6 @@ pdfproducer = \\LaTeX}
 \\renewcommand\\maketitle{}"
  ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}") ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
 ("letteren" "\\documentclass[11pt]{letter}
-\\def\\lang{en}
 \\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
 \\usepackage{lmodern}
@@ -443,7 +404,7 @@ pdfsubject = \\FileSubject,%
 pdfkeywords = \\FileKeyWords,%
 pdfcreator = \\LaTeX,%
 pdfproducer = \\LaTeX}
-\\newcommand\\dimilarmaketitle{}"
+\\newcommand\\dimilarmaketitle[1]{}"
  ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}") ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
 ("beamer" "
 \\documentclass[english,11pt,presentation,mathserif]{beamer}
@@ -458,7 +419,6 @@ pdfproducer = \\LaTeX}
   \\usepackage{mathptmx}
   \\usepackage[left=1.5cm,right=6cm,top=1.5cm,bottom=3cm]{geometry}
 }
-\\def\\lang{zh-CN}
 \\AtBeginSection[]
 {
   \\begin{frame}<beamer>
@@ -473,7 +433,6 @@ pdfproducer = \\LaTeX}
 \\usepackage{colortbl}
 \\usepackage{translator}
 \\usepackage{times}
-\\usepackage{fixltx2e}
 \\usepackage{graphicx}
 \\usepackage{longtable}
 \\usepackage{float}
@@ -489,14 +448,14 @@ pdfproducer = \\LaTeX}
 \\usepackage{ifthen}
 \\usepackage{mypgf}
 \\usepackage{minted}
-\\usepackage{orgpreamble}
+\\renewcommand{\\theFancyVerbLine}{\\sffamily \\textcolor{red}{\\scriptsize \\oldstylenums{\\arabic{FancyVerbLine}}}}
 \\usepackage{ezfontcfg}
 \\usepackage{hyperref}
 \\setbeamerfont{section number projected}{%
   family=\\rmfamily,series=\\bfseries,size=\\normalsize}
 \\setbeamercolor{section number projected}{bg=intelcolor,fg=white}
 \\setbeamertemplate{sections/subsections in toc}[ball]
-\\newcommand\\dimilarmaketitle{
+\\newcommand\\dimilarmaketitle[1]{
 \\maketitle
 \\begin{frame}{\\legaltitle}
 \\setbeamercolor{uppercol}{fg=white,bg=blue!40!gray}
@@ -523,14 +482,26 @@ pdfproducer = \\LaTeX}
 
 (require 'ox-latex)
 (setq org-src-fontify-natively t)
+(setq org-src-preserve-indentation t)
 ;;(add-to-list 'org-export-latex-packages-alist '("" "minted"))
 (add-to-list 'org-latex-minted-langs '(R "r"))
 (add-to-list 'org-latex-minted-langs '(C "c"))
 (add-to-list 'org-latex-minted-langs '(C++ "c++"))
-(setq org-latex-minted-options
-      '(("frame" "single")
-        ("bgcolor" "bg")
-        ("fontfamily" "tt")
-        ("fontsize" "\\scriptsize")))
 (setq org-latex-listings t)
 (setq org-latex-listings 'minted)
+(setq org-latex-create-formula-image-program 'imagemagick)
+(setq org-latex-table-caption-above nil)
+(setq org-format-latex-options
+   '(:foreground "royal blue" :background "Transparent" :scale 1.5 :html-foreground "black" :html-background "white" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
+(defmacro by-backend (&rest body)
+  `(case (if (boundp 'backend) (org-export-backend-name backend) nil) ,@body))
+(setq org-latex-minted-options
+      '(("frame" "single")
+        ("framesep" "10pt")
+        ("fontfamily" "tt")
+        ("fontsize" "\\scriptsize")
+        ("xleftmargin" "2em")
+        ("xrightmargin" "2em")
+        ("mathescape " "true")
+        ("linenos" "true")))
