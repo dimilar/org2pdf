@@ -37,8 +37,7 @@ class OrgExport(object):
         call emacs to export the org-mode file to specified type of file
         """
         # cmd = "emacs --batch --no-site-file --load %s --visit %s --funcall %s" %(self.conf, self.org_file, self.func)
-        cmd = 'emacsclient --eval "(save-excursion (let ((buffer (find-file-literally \\"%s\\"))) (setq make-backup-files nil) (with-current-buffer buffer (org-export-to-file \'latex \\"%s\\") (kill-buffer buffer))))"' %(self.org_file, self.out)
-        # print cmd
+        cmd = 'emacsclient --eval "(save-excursion (let ((buffer (find-file-literally \\"%s\\")) backend) (setq make-backup-files nil) (with-current-buffer buffer (re-search-forward \\"#\\\\\\\\+LATEX_CLASS: *\\\\\\\\([^ |^\\n|^\\t|^\\r]*\\\\\\\\)\\" nil t) (if (string=  (downcase (match-string 1)) \\"beamer\\") (setq backend \'beamer) (setq backend \'latex)) (org-export-to-file backend \\"%s\\") (kill-buffer))))"' %(self.org_file, self.out)
         subprocess.call(cmd, shell=True)
         # if ret == 0:
         #     stdout.write("Success:)\n")
